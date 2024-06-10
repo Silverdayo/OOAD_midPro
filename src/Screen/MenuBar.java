@@ -2,17 +2,11 @@ package Screen;
 import javax.swing.JMenuBar;
 
 import java.awt.event.ActionListener;
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 import Object.BasicObject;
 
@@ -55,10 +49,6 @@ public class MenuBar extends JMenuBar{
         return menuItem;
     }
 
-    public void ChangeObjectName(){
-        ((BasicObject)(canvas.focusedShape)).mode_changeName();
-        
-    }
 
     class Group implements ActionListener{
         public void actionPerformed(ActionEvent e){
@@ -81,7 +71,7 @@ public class MenuBar extends JMenuBar{
             if(canvas.currentMode.getName() == "select mode"){
                 Canvas canvas = Canvas.getCanvas();
                 if(canvas.focusedShape != null){
-                    ChangeObjectName();
+                    ((BasicObject)(canvas.focusedShape)).mode_changeName();
                 }
             }
         }

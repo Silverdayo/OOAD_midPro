@@ -4,18 +4,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
+import Factory.GroupFactory;
 import Mode.*;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
@@ -25,7 +22,6 @@ import Object.BasicObject;
 import Object.Line;
 import Object.Shape;
 import Object.Group;
-import Object.BasicObjectGenerate;
 
 public class Canvas extends JPanel{
     public Mode currentMode = null;
@@ -194,7 +190,7 @@ public class Canvas extends JPanel{
             for (Shape it : selectedShapes) {
                 shapes.remove(it);
             }
-            group = BasicObjectGenerate.Group(group, selectedShapes);
+            group = GroupFactory.GroupGenerate(selectedShapes);
     
             shapes.add(group);
         }

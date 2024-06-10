@@ -1,6 +1,12 @@
 package Screen;
 import javax.swing.*;
 
+import Factory.AssociationLineFactory;
+import Factory.ClassFactory;
+import Factory.CompositionLineFactory;
+import Factory.GeneralizationLineFactory;
+import Factory.UseCaseFactory;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +14,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList; 
 
 import Mode.*;
-import Object.BasicObjectGenerate;
 
 public class ToolLists extends JToolBar {
     final int ToolsNumber = 6;
@@ -39,11 +44,11 @@ public class ToolLists extends JToolBar {
     private void createButton(){
         list = new ArrayList<>();
         list.add(new ToolButton("select", "lib\\Select.png", new SelectMode()));
-        list.add(new ToolButton("association line", "lib\\AssociationLine.png", new LineCreateMode()));
-        list.add(new ToolButton("generalization line", "lib\\GeneralizationLine.png", new LineCreateMode()));
-        list.add(new ToolButton("composition line", "lib\\CompositionLine.png", new LineCreateMode()));
-        list.add(new ToolButton("class", "lib\\Class.png", new ObjectCreateMode()));
-        list.add(new ToolButton("use case", "lib\\UseCase.png", new ObjectCreateMode()));
+        list.add(new ToolButton("association line", "lib\\AssociationLine.png", new LineCreateMode(new AssociationLineFactory())));
+        list.add(new ToolButton("generalization line", "lib\\GeneralizationLine.png", new LineCreateMode(new GeneralizationLineFactory())));
+        list.add(new ToolButton("composition line", "lib\\CompositionLine.png", new LineCreateMode(new CompositionLineFactory())));
+        list.add(new ToolButton("class", "lib\\Class.png", new ObjectCreateMode(new ClassFactory())));
+        list.add(new ToolButton("use case", "lib\\UseCase.png", new ObjectCreateMode(new UseCaseFactory())));
     }
 
     private class ToolButton extends JButton{
@@ -68,7 +73,6 @@ public class ToolLists extends JToolBar {
                 focusedButton.setBackground(focusedColor);
                 canvas.currentMode = mode;
                 canvas.setMode();
-                BasicObjectGenerate.set_DrawnObject(getToolTipText());
             }
         }
     }

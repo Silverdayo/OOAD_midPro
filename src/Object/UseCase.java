@@ -7,11 +7,10 @@ public class UseCase extends BasicObject{
     final int UseCaseWidth = 120;
     final int dy = 45;
 
-    public UseCase(Point origPoint, int depth){
+    public UseCase(Point origPoint){
         this.originPoint = origPoint;
         this.height = UseCaseHeight;
         this.width = UseCaseWidth;
-        this.depth = depth;
         this.name = "UseCase name";
         setPort();
     }

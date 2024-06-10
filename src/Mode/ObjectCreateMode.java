@@ -1,14 +1,20 @@
 package Mode;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
+
+import Factory.IBasicObjectFactory;
 import Object.BasicObject;
-import Object.BasicObjectGenerate;
+
 public class ObjectCreateMode extends Mode{
     private BasicObject object;
+    private IBasicObjectFactory iBasicObjectFactory;
+
+    public ObjectCreateMode(IBasicObjectFactory iBasicObjectFactory){
+        this.iBasicObjectFactory = iBasicObjectFactory;
+    }
+
     public void mousePressed(MouseEvent e) {
-        object = BasicObjectGenerate.create_BasicObject(object, e.getPoint());
+        object = iBasicObjectFactory.BasicObjectGenerate(e.getPoint());
         canvas.addShape(object);
     }
 

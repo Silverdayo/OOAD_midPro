@@ -4,18 +4,16 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.*;
 
-import Screen.Canvas;
 
 public class Class extends BasicObject{
     final int classHeight = 150;
     final int classWidth = 100;
     final int dy = 30;
 
-    public Class(Point origPoint, int depth){
+    public Class(Point origPoint){
         this.originPoint = origPoint;
         this.height = classHeight;
         this.width = classWidth;
-        this.depth = depth;
         this.name = "class name";
         setPort();
     }

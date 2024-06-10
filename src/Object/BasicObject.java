@@ -4,10 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.font.*;
 import java.util.ArrayList;
 
 import Screen.Canvas;
+
 
 public abstract class BasicObject extends Shape{
     protected String name;

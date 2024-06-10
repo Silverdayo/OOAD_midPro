@@ -1,18 +1,13 @@
 package Mode;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.Point;
 
-import java.util.ArrayList;
-
-import Object.Shape;
+import Factory.ILineFactory;
 import Object.BasicObject;
-import Object.BasicObjectGenerate;
 import Object.Line;
 import Screen.Canvas;
 
 public class LineCreateMode extends Mode{
+    private ILineFactory iLineFactory;
 
     Line line = null;
 
@@ -24,13 +19,17 @@ public class LineCreateMode extends Mode{
 
     Canvas canvas = Canvas.getCanvas();
 
+    public LineCreateMode(ILineFactory ILineFactory){
+        this.iLineFactory = ILineFactory;
+    }
+
     public void mousePressed(MouseEvent e) {
         reset();
 
         startShape = (BasicObject)canvas.getInsideShape(e.getPoint());
         if(startShape != null){
             startPort = startShape.find_nearPort(e.getPoint());
-            line = BasicObjectGenerate.create_Line(line, startShape.getPorts().get(startPort), e.getPoint());
+            line = iLineFactory.LineGenerate(startShape.getPorts().get(startPort), e.getPoint());
             canvas.addLine(line);
         }
 
