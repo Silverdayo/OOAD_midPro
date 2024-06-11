@@ -70,7 +70,8 @@ public class Line{
 
     }
 
-    
-
+    public void drawHead(Graphics g, Point startPoint, Point endPoint, int Size){
+        System.out.println("You did not override it.");
+    }
     
 }

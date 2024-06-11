@@ -78,7 +78,8 @@ public class Group extends BasicObject{
         return point;
     }
 
-    public void UnGroup(){
+    @Override
+    public void Ungroup(){
         Canvas canvas = Canvas.getCanvas();
         for (BasicObject it : member) {
             canvas.addShape(it);
