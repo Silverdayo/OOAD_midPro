@@ -1,5 +1,7 @@
 package Object;
+import java.awt.BasicStroke;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
 
 public class Line{
@@ -7,8 +9,8 @@ public class Line{
     protected Point endPoint;
     protected BasicObject startShape;
     protected BasicObject endShape;
-    protected int startPort;
-    protected int endPort;
+    protected Port startPort;
+    protected Port endPort;
 
     public Point get_endPoint(){
         return this.endPoint;
@@ -30,13 +32,13 @@ public class Line{
         this.originPoint = point;
     }
 
-    public void setStartPort(int n) {this.startPort = n;}
+    public void setStartPort(Port n) {this.startPort = n;}
 
-    public void setEndPort(int n) {this.endPort = n;}
+    public void setEndPort(Port n) {this.endPort = n;}
 
-    public int getStartPort() {return this.startPort;}
+    public Port getStartPort() {return this.startPort;}
 
-    public int getEndPort() {return this.endPort;}
+    public Port getEndPort() {return this.endPort;}
 
     public void setStartShape(BasicObject shape) {this.startShape = shape;}
 
@@ -46,18 +48,38 @@ public class Line{
 
     public BasicObject getEndShape() {return this.endShape;}
 
-    public void settled(BasicObject startShape, BasicObject endShape, int startPort, int endPort){
+    public void settled(BasicObject startShape, BasicObject endShape, Port startPort, Port endPort){
         setStartShape(startShape);
         setEndShape(endShape);
         setStartPort(startPort);
         setEndPort(endPort);
-        setPoint(startShape.getPorts().get(startPort));
-        set_endPoint(endShape.getPorts().get(endPort));
+        setPoint(startPort.getPosition());
+        set_endPoint(endPort.getPosition());
     }
 
     public void reset(){
-        setPoint(startShape.getPorts().get(startPort));
-        set_endPoint(endShape.getPorts().get(endPort));
+        setPoint(startPort.getPosition());
+        set_endPoint(endPort.getPosition());
     }
 
+    public void drawSolidLine(Graphics g, Point startPoint, Point endPoint){
+        Graphics2D g2 = (Graphics2D) g;
+		g2.setStroke(new BasicStroke(2));
+    
+        g.drawLine((int)startPoint.x, (int)startPoint.y, (int)endPoint.x, (int)endPoint.y);
+
+    }
+
+    public void drawArrow(Graphics g, Point startPoint, Point endPoint, int size){
+        Point basePoint = new Point();
+        basePoint.x = startPoint.x + (endPoint.x - startPoint.x) * (int)(startPoint.distance(endPoint) - size) / (int)(startPoint.distance(endPoint));
+        basePoint.y = startPoint.y + (endPoint.y - startPoint.y) * (int)(startPoint.distance(endPoint) - size) / (int)(startPoint.distance(endPoint));
+
+        Point vec = new Point();
+        vec.x = - (endPoint.y - basePoint.y);
+        vec.y = (endPoint.x - basePoint.x);
+
+        g.drawLine((int)endPoint.getX(), (int)endPoint.getY(), basePoint.x + vec.x , basePoint.y + vec.y );
+        g.drawLine((int)endPoint.getX(), (int)endPoint.getY(), basePoint.x - vec.x , basePoint.y - vec.y);
+    }
 }

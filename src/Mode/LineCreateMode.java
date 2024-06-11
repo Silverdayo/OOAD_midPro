@@ -2,8 +2,11 @@ package Mode;
 import java.awt.event.MouseEvent;
 
 import Factory.ILineFactory;
+
 import Object.BasicObject;
 import Object.Line;
+import Object.Port;
+
 import Screen.Canvas;
 
 public class LineCreateMode extends Mode{
@@ -12,10 +15,10 @@ public class LineCreateMode extends Mode{
     Line line = null;
 
     BasicObject startShape = null;
-    int startPort = -1;
+    Port startPort = null;
 
     BasicObject endShape = null;
-    int endPort = -1;
+    Port endPort = null;
 
     Canvas canvas = Canvas.getCanvas();
 
@@ -28,8 +31,8 @@ public class LineCreateMode extends Mode{
 
         startShape = canvas.getInsideShape(e.getPoint());
         if(startShape != null){
-            startPort = startShape.find_nearPort(e.getPoint());
-            line = iLineFactory.LineGenerate(startShape.getPorts().get(startPort), e.getPoint());
+            startPort = startShape.getPorts().get(startShape.find_nearPort(e.getPoint()));
+            line = iLineFactory.LineGenerate(startPort.getPosition(), e.getPoint());
             canvas.addLine(line);
         }
 
@@ -38,10 +41,10 @@ public class LineCreateMode extends Mode{
     public void mouseReleased(MouseEvent e) {
         endShape = canvas.getInsideShape(e.getPoint());
         if(endShape != null && endShape != startShape){
-            endPort = endShape.find_nearPort(e.getPoint());
+            endPort = endShape.getPorts().get(endShape.find_nearPort(e.getPoint()));
             line.settled(startShape, endShape, startPort, endPort);
-            startShape.add_connectedLine(line);
-            endShape.add_connectedLine(line);
+            startPort.addLine(line);
+            endPort.addLine(line);
             canvas.repaint();
         }else{
             canvas.removeLine(line);
@@ -59,8 +62,8 @@ public class LineCreateMode extends Mode{
     public void reset(){
         line = null;
         startShape = null;
-        startPort = -1;
+        startPort = null;
         endShape = null;
-        endPort = -1;
+        endPort = null;
     }
 }
