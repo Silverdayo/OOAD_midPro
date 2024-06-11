@@ -1,7 +1,6 @@
 package Object;
-import java.awt.BasicStroke;
+
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
 public class GeneralizationLine extends Line{
     public GeneralizationLine(Point startpoint, Point endPoint){
@@ -11,14 +10,15 @@ public class GeneralizationLine extends Line{
 
     @Override
     public void drawShape(Graphics g){
-        Graphics2D g2 = (Graphics2D) g;
-		g2.setStroke(new BasicStroke(2));
-    
-        g.drawLine((int)originPoint.getX(), (int)originPoint.getY(), (int)endPoint.getX(), (int)endPoint.getY());
+        drawSolidLine(g, originPoint, endPoint);
 
+        drawTriangel(g, originPoint, endPoint, 10);
+    }
+
+    public void drawTriangel(Graphics g, Point startPoint, Point endPoint, int size){
         Point basePoint = new Point();
-        basePoint.x = originPoint.x + (endPoint.x - originPoint.x) * (int)(originPoint.distance(endPoint) - 10) / (int)(originPoint.distance(endPoint));
-        basePoint.y = originPoint.y + (endPoint.y - originPoint.y) * (int)(originPoint.distance(endPoint) - 10) / (int)(originPoint.distance(endPoint));
+        basePoint.x = startPoint.x + (endPoint.x - startPoint.x) * (int)(startPoint.distance(endPoint) - size) / (int)(startPoint.distance(endPoint));
+        basePoint.y = startPoint.y + (endPoint.y - startPoint.y) * (int)(startPoint.distance(endPoint) - size) / (int)(startPoint.distance(endPoint));
 
         Point vec = new Point();
         vec.x = - (endPoint.y - basePoint.y);
