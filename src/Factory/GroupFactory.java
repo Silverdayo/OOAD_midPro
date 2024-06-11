@@ -3,13 +3,12 @@ package Factory;
 
 import java.util.ArrayList;
 
-import Object.Shape;
-
+import Object.BasicObject;
 import Object.Group;
 
 public class GroupFactory {
 
-    public static Group GroupGenerate(ArrayList<Shape> shapes){
+    public static Group GroupGenerate(ArrayList<BasicObject> shapes){
         return new Group(shapes);
     }
     

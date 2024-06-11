@@ -20,16 +20,15 @@ import java.util.EventListener;
 
 import Object.BasicObject;
 import Object.Line;
-import Object.Shape;
 import Object.Group;
 
 public class Canvas extends JPanel{
     public Mode currentMode = null;
     private EventListener listener = null;
-    private ArrayList<Shape> shapes = new ArrayList<Shape>();
-    private ArrayList<Shape> selectedShapes = new ArrayList<Shape>();
+    private ArrayList<BasicObject> shapes = new ArrayList<BasicObject>();
+    private ArrayList<BasicObject> selectedShapes = new ArrayList<BasicObject>();
     private ArrayList<Line> lines = new ArrayList<Line>();
-    public Shape focusedShape = null;
+    public BasicObject focusedShape = null;
     private Point SelectedAreaStartPoint = null;
     private Point SelectedAreaEndPoint = null;
 
@@ -87,7 +86,7 @@ public class Canvas extends JPanel{
             g.setColor(new Color(100,100,100,33));
             g.fillPolygon(ptx, pty, 4);
 
-            for (Shape it : selectedShapes) {
+            for (BasicObject it : selectedShapes) {
                 it.focused(g);
             }
         }
@@ -96,6 +95,11 @@ public class Canvas extends JPanel{
 
     public void addShape(BasicObject obj){
         shapes.add(obj);
+        repaint();
+    }
+
+    public void removeShape(BasicObject obj){
+        shapes.remove(obj);
         repaint();
     }
 
@@ -109,7 +113,7 @@ public class Canvas extends JPanel{
         repaint();
     }
 
-    public ArrayList<Shape> get_shapes(){
+    public ArrayList<BasicObject> get_shapes(){
         return this.shapes;
     }
 
@@ -117,9 +121,9 @@ public class Canvas extends JPanel{
         return this.lines;
     }
 
-    public Shape getInsideShape(Point point){
-        Shape returnShape = null;
-        for (Shape it : this.shapes) {
+    public BasicObject getInsideShape(Point point){
+        BasicObject returnShape = null;
+        for (BasicObject it : this.shapes) {
             if(it.inside(point) != null){
                 if(returnShape == null || returnShape.getdepth() > it.getdepth()) returnShape = it;
             }
@@ -166,7 +170,7 @@ public class Canvas extends JPanel{
         selectedShapes.clear();
         SelectedAreaStartPoint = startPoint;
         SelectedAreaEndPoint = endPoint;
-        for (Shape it : shapes) {
+        for (BasicObject it : shapes) {
             if(inSelectedArea(it.getPoint())) selectedShapes.add(it);
         }
     }
@@ -174,7 +178,7 @@ public class Canvas extends JPanel{
     public void resetSelectedArea(){
         SelectedAreaStartPoint = null;
         SelectedAreaEndPoint = null;
-        selectedShapes = new ArrayList<Shape>();
+        selectedShapes = new ArrayList<BasicObject>();
         focusedShape = null;
         repaint();
     }
@@ -187,7 +191,7 @@ public class Canvas extends JPanel{
     public void Group(){
         if(selectedShapes.size() >=2) {
             Group group = null;
-            for (Shape it : selectedShapes) {
+            for (BasicObject it : selectedShapes) {
                 shapes.remove(it);
             }
             group = GroupFactory.GroupGenerate(selectedShapes);
@@ -198,11 +202,6 @@ public class Canvas extends JPanel{
     }
 
     public void unGroup(){
-        if(focusedShape instanceof Group){
-            for (Shape it : ((Group)focusedShape).getMembers()) {
-                shapes.add(it);
-            }
-            shapes.remove(focusedShape);
-        }
+        focusedShape.Ungroup();
     }
 }

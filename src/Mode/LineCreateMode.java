@@ -26,7 +26,7 @@ public class LineCreateMode extends Mode{
     public void mousePressed(MouseEvent e) {
         reset();
 
-        startShape = (BasicObject)canvas.getInsideShape(e.getPoint());
+        startShape = canvas.getInsideShape(e.getPoint());
         if(startShape != null){
             startPort = startShape.find_nearPort(e.getPoint());
             line = iLineFactory.LineGenerate(startShape.getPorts().get(startPort), e.getPoint());
@@ -36,7 +36,7 @@ public class LineCreateMode extends Mode{
     }
 
     public void mouseReleased(MouseEvent e) {
-        endShape = (BasicObject)canvas.getInsideShape(e.getPoint());
+        endShape = canvas.getInsideShape(e.getPoint());
         if(endShape != null && endShape != startShape){
             endPort = endShape.find_nearPort(e.getPoint());
             line.settled(startShape, endShape, startPort, endPort);

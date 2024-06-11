@@ -8,7 +8,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
-import Object.BasicObject;
 
 
 public class MenuBar extends JMenuBar{
@@ -71,7 +70,7 @@ public class MenuBar extends JMenuBar{
             if(canvas.currentMode.getName() == "select mode"){
                 Canvas canvas = Canvas.getCanvas();
                 if(canvas.focusedShape != null){
-                    ((BasicObject)(canvas.focusedShape)).mode_changeName();
+                    canvas.focusedShape.mode_changeName();
                 }
             }
         }

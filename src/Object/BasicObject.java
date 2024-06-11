@@ -9,14 +9,31 @@ import java.util.ArrayList;
 import Screen.Canvas;
 
 
-public abstract class BasicObject extends Shape{
+public abstract class BasicObject{
+    protected Point originPoint;
+    protected int depth;
     protected String name;
     protected int height;
     protected int width;
     protected Font font = new Font(Font.DIALOG, Font.BOLD, 14);
     protected int portWidth = 10;
+    
     private ArrayList<Point> ports;
     private ArrayList<Line> connectedLines = new ArrayList<Line>();
+
+    public Point getPoint(){
+        return this.originPoint;
+    }
+
+
+    public int getdepth(){
+        return this.depth;
+    }
+
+    public void drawShape(Graphics g){
+        System.out.println("you did not override its.");
+    }
+
 
     public int getheight(){
         return this.height;
@@ -99,8 +116,7 @@ public abstract class BasicObject extends Shape{
        Canvas canvas = Canvas.getCanvas();
        canvas.changeObjName();
     }
-    @Override
-    public Point getPoint(){
-        return this.originPoint;
-    }
+
+    public void Ungroup(){}
+
 }

@@ -10,7 +10,7 @@ import Object.*;
 
 public class SelectMode extends Mode{
     Point start, startSelect;
-    ArrayList<Shape> shapes;
+    ArrayList<BasicObject> shapes;
     public void mousePressed(MouseEvent e) {
         resetPoint();
         start = e.getPoint();
